@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - LaboursHub</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <script src="./assets/js/script.js" defer></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar">
+        <div class="logo">LaboursHub</div>
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="Q&A.html">Help</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ✅ Login Section -->
+    <section class="auth-section">
+      <div class="auth-container">
+        <h2>Login</h2>
+        <form class="auth-form" method="POST" >
+          <!-- User Type Selection -->
+           <!-- Yaha pr abhi user type ke liye onclick function use kr rahe hai isiliye select krte hi redircet tho jainge. Iss chiz ko backend ka logic dalte time change krna hai authentication aur middleware dalke -->
+          <select id="userType" required>
+            <option value="" disabled selected>Login as...</option>
+            <option value="dashboard-customer.html">Customer</option>
+            <option value="dashboard-labour.html">Labour</option>
+          </select>
+
+          <input type="email" placeholder="Email Address" name="email" required />
+          <input type="password" placeholder="Password" name="password" required />
+
+          <button type="submit">Login</button>
+          <p class="switch-text">
+            New here?
+            <a href="register.html">Register</a>
+          </p>
+        </form>
+      </div>
+    </section>
+    <script>
+      
+      const form = document.getElementById("auth-form");
+            form.addEventListener("submit", async function (e) {
+              e.preventDefault();
+
+              const formData = {
+                                
+                email: form.email.value,
+                password: form.password.value,
+
+              };
+
+              const res = await fetch("/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+              });
+
+              const data = res.json();
+
+              if (email === "labour@gmail.com" && password  === "labour@123") {
+                window.location.href = "./profile.html";
+              } else {
+                alert("Wrong Email or Password");
+              }
+            });
+
+      // // Get the select element by its ID
+      // const selectElement = document.getElementById("userType");
+
+      // // Add an 'onchange' event listener to the select element
+      // selectElement.onchange = function () {
+      //   // Check if a value is selected and it's not the disabled "Login as..." option
+      //   if (this.value) {
+      //     // Redirect the user to the selected page
+      //     window.location.href = this.value;
+      //   }
+      // };
+    </script>
+  </body>
+</html>

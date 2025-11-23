@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - LabursHub</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">LabursHub</div>
+      <div class="menu-toggle" id="menu-toggle">☰</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="dashboard-customer.html">Dashboard</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="profile.html" class="active">Profile</a></li>
+        <li><a href="login.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Profile Section -->
+  <div class="profile-container">
+    <div class="profile-header">
+      <img src="https://via.placeholder.com/100" alt="Profile Picture">
+      <h2 id="userName">AABBCC</h2>
+      <p class="role" id="userRole">Labour</p>
+    </div>
+
+    <!-- Profile Form -->
+    <form id="profileForm">
+      <!-- Fields will load dynamically -->
+    </form>
+
+    <button type="button" onclick="updateProfile()">Update Profile</button>
+    <button type="button" onclick="changePassword()">Change Password</button>
+  </div>
+
+  <script src="./assets/js/script.js"></script>
+</body>
+</html>

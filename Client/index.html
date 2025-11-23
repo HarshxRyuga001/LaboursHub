@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LaboursHub - Hire & Get Hired</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/yourkit.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar">
+        <div class="logo">LaboursHub</div>
+        <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="register.html">Register</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="Q&A.html">Help</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        class="bg-video"
+        poster="images/hero-fallback.jpg"
+      >
+        <source src="./assets/videos/construction.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <div class="hero-content">
+        <h1>Welcome to LaboursHub</h1>
+        <p>Connecting skilled labours with customers easily</p>
+        <a href="login.html" class="btn">Hire Now</a>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+      <h2>How LaboursHub Works</h2>
+      <div class="steps">
+        <div class="step">
+          <i class="fas fa-user-hard-hat fa-3x"></i>
+          <h3>For Labours</h3>
+          <p>
+            Register your profile, list your skills, and get job offers directly
+            from customers.
+          </p>
+        </div>
+        <div class="step">
+          <i class="fas fa-users fa-3x"></i>
+          <h3>For Customers</h3>
+          <p>
+            Search for skilled workers, view their profiles, and hire instantly
+            with one click.
+          </p>
+        </div>
+        <div class="step">
+          <i class="fas fa-handshake fa-3x"></i>
+          <h3>Easy & Secure</h3>
+          <p>We make hiring smooth, transparent, and simple for both sides.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose">
+      <h2>Why Choose LaboursHub?</h2>
+      <div class="features">
+        <div class="feature">
+          <i class="fas fa-bolt"></i>
+          <p>Quick Hiring Process</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-check-circle"></i>
+          <p>Verified Labours</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-mobile-alt"></i>
+          <p>Simple to Use</p>
+        </div>
+        <div class="feature">
+          <i class="fas fa-globe"></i>
+          <p>Available Anywhere</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Us section -->
+    <!-- Hero Section -->
+    <h1 class="aboutvala" id="about">About Us</h1>
+    <section class="about">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        class="bg-video"
+        poster="images/about-fallback.jpg"
+      >
+        <source src="./assets/videos/about.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <div class="about-content">
+        <h2>About LaboursHub</h2>
+        <p>
+          LaboursHub is a platform where construction labours can register
+          themselves and customers can easily hire them. We aim to bridge the
+          gap between workers and employers in the construction industry.
+        </p>
+      </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="about-section fade-section">
+      <h2>Our Story</h2>
+      <p>
+        LaboursHub was founded with a simple mission – to make hiring
+        construction labours easy, transparent, and fair. We believe skilled
+        workers deserve more opportunities, and customers deserve trustworthy
+        service.
+      </p>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="about-section fade-section">
+      <h2>Our Mission</h2>
+      <p>
+        To empower construction workers with opportunities and to provide
+        customers with an easy, reliable way to hire trusted labours for any
+        project.
+      </p>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+      <div class="contact-container">
+        <h2>Contact Us</h2>
+        <p>Have questions or need help? Get in touch with us!</p>
+
+        <div class="contact-grid">
+          <!-- Contact Form -->
+          <form id="contactform" class="contact-form" method="POST">
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+            />
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="Your Message"
+              required
+            ></textarea>
+            <button type="submit">Send Message</button>
+          </form>
+          <script>
+            const form = document.getElementById("contactform");
+            form.addEventListener("submit", async function (e) {
+              e.preventDefault();
+
+              const formData = {
+                name: form.name.value,
+                
+                email: form.email.value,
+                message: form.message.value,
+              };
+
+              const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+              });
+              const data = res.json();
+
+              alert("Thank you! Your message has been sent.");
+
+              // Reset the form after submit
+              form.reset();
+            });
+          </script>
+
+          <!-- Contact Info -->
+          <div class="contact-info">
+            <h3>Our Office</h3>
+            <p>📍 Sarigam, Gujarat, India</p>
+            <p>📞 +91 1234567890</p>
+            <p>✉️ support@Labourshub.com</p>
+
+            <!-- Map Embed -->
+            <div class="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.123456789!2d72.5714!3d23.0225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e84f1d!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1234567890"
+                width="100%"
+                height="250"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2025 LaboursHub. All Rights Reserved.</p>
+    </footer>
+    <script src="./assets/js/script.js"></script>
+    <script src="../Server/"></script>
+  </body>
+</html>

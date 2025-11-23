@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard - LabursHub</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+  <script src="./assets/js/script.js" defer></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">LabursHub</div>
+      <div class="menu-toggle" id="menu-toggle">☰</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="customer-dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="Q&A.html">Help</a></li>
+        <li><a href="index.html">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Dashboard Section -->
+  <section class="dashboard-section">
+    <div class="dashboard-container">
+      <h2>Welcome, <span class="highlight">Mr. ABC (Example Customer)</span></h2>
+      <p>Post a new job or view your existing jobs.</p>
+
+      <!-- Job Posting Form -->
+      <div class="job-form-container">
+        <h3>Post a New Job</h3>
+        <form class="job-form" action="#" method="post">
+          <input type="text" name="job_title" placeholder="Job Title" required>
+          <input type="text" name="location" placeholder="Location" required>
+          <input type="text" name="pay" placeholder="Pay (e.g. ₹1000/day)" required>
+          <textarea name="description" rows="4" placeholder="Job Description" required></textarea>
+          <button type="submit">Post Job</button>
+        </form>
+      </div>
+
+      <!-- Posted Jobs Table -->
+      <div class="table-container">
+        <h3>Your Posted Jobs</h3>
+        <table class="job-table">
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Location</th>
+              <th>Pay</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>House Painting</td>
+              <td>Ahmedabad</td>
+              <td>₹800/day</td>
+              <td>Open</td>
+              <td><button class="delete-btn">Delete</button></td>
+            </tr>
+            <tr>
+              <td>Carpentry Work</td>
+              <td>Vadodara</td>
+              <td>₹1200/day</td>
+              <td>In Progress</td>
+              <td><button class="delete-btn">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>
