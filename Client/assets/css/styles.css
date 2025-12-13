@@ -1555,3 +1555,82 @@ button:hover {
     display: block;
   }
 }
+
+:root{
+  --brand:#1c1c1c; /* header dark */
+  --accent:#ff9900; /* orange */
+  --muted:#f4f4f6;
+  --success:#2a9d8f;
+  --danger:#e63946;
+  --card-bg:#ffffff;
+  --text:#1f2937;
+}
+
+/* Reset */
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Segoe UI,Roboto,'Poppins',sans-serif;margin:0;background:#f7f8fb;color:var(--text)}
+
+/* Header (consistent with theme) */
+header{background:var(--brand);position:sticky;top:0;z-index:1000}
+.navbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
+.logo{font-weight:700;color:var(--accent);font-size:20px}
+.menu-toggle{display:none;color:#fff;font-size:24px;cursor:pointer}
+.nav-links{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+.nav-links a{color:#fff;text-decoration:none;font-weight:500}
+.nav-links a:hover{color:var(--accent)}
+
+/* Hero */
+.dashboard-hero{padding:28px 20px;background:linear-gradient(0deg,rgba(0,0,0,0.02),rgba(0,0,0,0.02))}
+.hero-inner{max-width:1200px;margin:0 auto;text-align:center}
+.hero-inner h1{margin:0;font-size:1.8rem}
+.hero-inner p{margin:8px 0 18px;color:#555}
+
+/* Controls */
+.controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.controls input[type="search"],.controls select{
+  padding:10px 12px;border-radius:8px;border:1px solid #e6e6ee;background:#fff;min-width:160px;font-size:14px
+}
+.controls .btn{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+
+/* Cards Grid */
+.cards-section{max-width:1200px;margin:24px auto;padding:0 18px}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+
+/* Card */
+.card{background:var(--card-bg);border-radius:12px;padding:14px;box-shadow:0 6px 18px rgba(20,20,40,0.06);display:flex;flex-direction:column;gap:10px;transition:transform .15s ease,box-shadow .15s}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(20,20,40,0.08)}
+.card-top{display:flex;gap:12px;align-items:center}
+.avatar{width:64px;height:64px;border-radius:8px;object-fit:cover;background:#eee;flex-shrink:0}
+.info{flex:1}
+.name{font-weight:700;margin-bottom:4px}
+.skill-list{font-size:13px;color:#445;opacity:.9;margin-bottom:6px}
+.badge{display:inline-block;padding:6px 8px;border-radius:999px;font-size:12px;font-weight:600}
+.badge.available{background:rgba(42,157,143,0.12);color:var(--success);border:1px solid rgba(42,157,143,0.15)}
+.badge.not-available{background:rgba(230,57,70,0.06);color:var(--danger);border:1px solid rgba(230,57,70,0.12)}
+
+/* rating + price row */
+.meta-row{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.rating{display:flex;gap:4px;align-items:center;font-size:14px;color:#f59e0b}
+.price{font-weight:700;color:var(--brand)}
+
+/* actions */
+.card-actions{display:flex;gap:8px;margin-top:8px}
+.btn-outline{flex:1;padding:9px;border-radius:8px;border:1px solid #e6e6ee;background:transparent;cursor:pointer}
+.btn-primary{flex:1;padding:9px;border-radius:8px;border:0;background:var(--accent);color:#fff;cursor:pointer}
+
+/* small helpers */
+.small{font-size:13px;color:#666}
+
+/* Modal (quick view) */
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:2000}
+.modal.show{display:flex}
+.modal-content{background:#fff;border-radius:12px;padding:18px;max-width:600px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-close{position:absolute;right:18px;top:12px;border:0;background:transparent;font-size:22px;cursor:pointer}
+
+/* responsive */
+@media (max-width:768px){
+  .nav-links{display:none;position:absolute;right:16px;top:60px;background:var(--brand);padding:10px;border-radius:10px}
+  .menu-toggle{display:block}
+  .controls{justify-content:flex-start}
+  .controls input[type="search"]{min-width:120px}
+}
