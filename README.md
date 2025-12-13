@@ -217,5 +217,3 @@ A **dynamic profile page** used by both labours and customers.
 
 **LabursHub**
 A real-world job marketplace project for the construction industry.
-
-Just tell me 👍
