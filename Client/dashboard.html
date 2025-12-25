@@ -1,66 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard - LabursHub</title>
-  <link rel="stylesheet" href="./assets/css/styles.css">
-</head>
-<body>
-  <!-- Navbar (your provided header structure) -->
-  <header>
-    <nav class="navbar">
-      <div class="logo">Laburs<span>Hub</span></div>
-      <div class="menu-toggle" id="menu-toggle">☰</div>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="jobs.html">Jobs</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dashboard - LabursHub</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <script src="./assets/js/auth.js"></script>
+    <script src="./assets/js/navbar.js"></script>
+    <script src="./assets/js/script.js"></script>
+  </head>
+  <body>
+    <!-- Navbar (your provided header structure) -->
+    <header>
+      <nav class="navbar">
+        <div class="logo">Laburs<span>Hub</span></div>
 
-  <!-- Dashboard Header -->
-  <section class="dashboard-hero">
-    <div class="hero-inner">
-      <h1>Find Skilled Labours Near You</h1>
-      <p>Live availability, ratings, and rates — hire in one click.</p>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
 
-      <div class="controls">
-        <input id="searchInput" type="search" placeholder="Search by name or skill..." aria-label="Search labours">
-        <select id="skillFilter">
-          <option value="">All skills</option>
-          <option value="mason">Mason</option>
-          <option value="carpenter">Carpenter</option>
-          <option value="electrician">Electrician</option>
-          <option value="painter">Painter</option>
-          <option value="plumber">Plumber</option>
-          <option value="general">General Labour</option>
-        </select>
-        <select id="availFilter">
-          <option value="">All</option>
-          <option value="available">Available</option>
-          <option value="not-available">Not Available</option>
-        </select>
-        <button id="refreshBtn" class="btn">Refresh</button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="Q&A.HTML">FAQ</a></li>
+          <li><a href="login.html" id="nav-login">Login</a></li>
+          <li><a href="register.html" id="nav-register">Register</a></li>
+
+          <li>
+            <a href="profile.html" id="nav-profile" style="display: none"
+              >Profile</a
+            >
+          </li>
+          <li>
+            <a href="/logout" id="nav-logout" style="display: none">Logout</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-hero">
+      <div class="hero-inner">
+        <h1>Find Skilled Labours Near You</h1>
+        <p>Live availability, ratings, and rates — hire in one click.</p>
+
+        <div class="controls">
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search by name or skill..."
+            aria-label="Search labours"
+          />
+          <select id="skillFilter">
+            <option value="">All skills</option>
+            <option value="mason">Mason</option>
+            <option value="carpenter">Carpenter</option>
+            <option value="electrician">Electrician</option>
+            <option value="painter">Painter</option>
+            <option value="plumber">Plumber</option>
+            <option value="general">General Labour</option>
+          </select>
+          <select id="availFilter">
+            <option value="">All</option>
+            <option value="available">Available</option>
+            <option value="not-available">Not Available</option>
+          </select>
+          <button id="refreshBtn" class="btn">Refresh</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cards Grid -->
+    <main class="cards-section">
+      <div id="cardsContainer" class="cards-grid" aria-live="polite"></div>
+    </main>
+
+    <!-- Minimal modal for quick view (optional) -->
+    <div id="profileModal" class="modal" aria-hidden="true">
+      <div class="modal-content">
+        <button id="modalClose" class="modal-close" aria-label="Close">
+          ×
+        </button>
+        <div id="modalBody"></div>
       </div>
     </div>
-  </section>
 
-  <!-- Cards Grid -->
-  <main class="cards-section">
-    <div id="cardsContainer" class="cards-grid" aria-live="polite"></div>
-  </main>
-
-  <!-- Minimal modal for quick view (optional) -->
-  <div id="profileModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-      <button id="modalClose" class="modal-close" aria-label="Close">×</button>
-      <div id="modalBody"></div>
-    </div>
-  </div>
-
-  <script src="./assets/js/dashboard.js" defer></script>
-</body>
+    <script src="./assets/js/dashboard.js" defer></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  </body>
 </html>

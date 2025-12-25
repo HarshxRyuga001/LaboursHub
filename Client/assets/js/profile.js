@@ -1,6 +1,9 @@
 // profile.js
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  const user = await requireAuth();
+  if (!user) return;
   const formEl = document.getElementById("profileForm");
+  formEl.innerHTML = "<p>Loading profile…</p>";
   const userNameEl = document.getElementById("userName");
   const userRoleEl = document.getElementById("userRole");
   const avatarImg = document.querySelector(".profile-header img");
@@ -17,7 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       const data = await res.json();
-      if (!data || !data.user) { window.location.href = "login.html"; return; }
+      if (!data || !data.user) {
+        window.location.href = "login.html";
+        return;
+      }
       populateProfile(data.role, data.user);
     } catch (err) {
       console.error(err);
@@ -29,42 +35,75 @@ document.addEventListener("DOMContentLoaded", () => {
     currentRole = role;
     userNameEl.innerText = user.name || "Unnamed";
     userRoleEl.innerText = role;
-    avatarImg.src = (user.image ? "/" + user.image : "assets/default-avatar.png");
+    avatarImg.src = user.image ? "/" + user.image : "assets/default-avatar.png";
 
     // Build the form HTML (keep ids for easy access)
     if (role === "labour") {
       formEl.innerHTML = `
-        <label>Name</label><input id="name" name="name" value="${escapeHtml(user.name||'')}" />
-        <label>Phone</label><input id="phone" name="phone" value="${escapeHtml(user.phone||'')}" />
-        <label>Location</label><input id="location" name="location" value="${escapeHtml(user.location||'')}" />
-        <label>Skills (comma separated)</label><input id="skills" name="skills" value="${escapeHtml((user.skills||[]).join(', '))}" />
-        <label>Experience</label><input id="experience" name="experience" value="${escapeHtml(user.experience||'')}" />
-        <label>Availability</label>
-        <select id="availability" name="availability">
-          <option value="available" ${user.availability === 'available' ? 'selected' : ''}>Available</option>
-          <option value="not-available" ${user.availability === 'not-available' ? 'selected' : ''}>Not Available</option>
-        </select>
+    <label>Name</label>
+    <input id="name" name="name" value="${escapeHtml(user.name || "")}" />
 
-        <label>Upload / Change Profile Image</label>
-        <input id="image" name="image" type="file" accept="image/*" />
-      `;
-      // availability change handled instantly
-      document.getElementById("availability").addEventListener("change", onAvailabilityChange);
+    <label>Phone</label>
+    <input id="phone" name="phone" value="${escapeHtml(user.phone || "")}" />
+
+    <label>City</label>
+    <input id="city" name="city" value="${escapeHtml(user.city || "")}" />
+
+    <label>Skills (comma separated)</label>
+    <input id="skills" name="skills" value="${escapeHtml(
+      (user.skills || []).join(", ")
+    )}" />
+
+    <label>Experience</label>
+    <input id="experience" name="experience" value="${escapeHtml(
+      user.experience || ""
+    )}" />
+
+    <label>Availability</label>
+    <select id="availability" name="availability">
+      <option value="available" ${
+        user.availability === "available" ? "selected" : ""
+      }>
+        Available
+      </option>
+      <option value="not-available" ${
+        user.availability === "not-available" ? "selected" : ""
+      }>
+        Not Available
+      </option>
+    </select>
+
+    <label>Profile Image</label>
+    <input id="image" name="image" type="file" accept="image/*" />
+  `;
+
+      document
+        .getElementById("availability")
+        .addEventListener("change", onAvailabilityChange);
     } else {
       formEl.innerHTML = `
-        <label>Name</label><input id="name" name="name" value="${escapeHtml(user.name||'')}" />
-        <label>Phone</label><input id="phone" name="phone" value="${escapeHtml(user.phone||'')}" />
-        <label>Location</label><input id="location" name="location" value="${escapeHtml(user.location||'')}" />
-        <label>Company</label><input id="company" name="company" value="${escapeHtml(user.company||'')}" />
-        <label>Upload / Change Profile Image</label>
-        <input id="image" name="image" type="file" accept="image/*" />
-      `;
+    <label>Name</label>
+    <input id="name" name="name" value="${escapeHtml(user.name || "")}" />
+
+    <label>Phone</label>
+    <input id="phone" name="phone" value="${escapeHtml(user.phone || "")}" />
+
+    <label>City</label>
+    <input id="city" name="city" value="${escapeHtml(user.city || "")}" />
+
+    <label>Profile Image</label>
+    <input id="image" name="image" type="file" accept="image/*" />
+  `;
     }
   }
 
   // Escape helper to avoid injecting quotes
   function escapeHtml(s = "") {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
   // Update profile submission
@@ -76,11 +115,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Collect fields by ids
     const name = document.getElementById("name")?.value || "";
+    if (!name.trim()) {
+      alert("Name cannot be empty");
+      return;
+    }
     const phone = document.getElementById("phone")?.value || "";
-    const location = document.getElementById("location")?.value || "";
+    const city = document.getElementById("city")?.value || "";
     fd.append("name", name);
     fd.append("phone", phone);
-    fd.append("location", location);
+    fd.append("city", city);
 
     // Role-specific
     if (currentRole === "labour") {
@@ -91,8 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
       fd.append("experience", experience);
       fd.append("availability", availability);
     } else {
-      const company = document.getElementById("company")?.value || "";
-      fd.append("company", company);
     }
 
     // Image file (if selected)
@@ -100,26 +141,26 @@ document.addEventListener("DOMContentLoaded", () => {
     if (fileInput && fileInput.files && fileInput.files[0]) {
       fd.append("image", fileInput.files[0]);
     }
-
+    
+    updateBtn.disabled = true;
+    updateBtn.innerText = "Saving...";
     try {
-      updateBtn.disabled = true;
-      updateBtn.innerText = "Saving...";
-
       const res = await fetch("/api/profile", {
         method: "PUT",
         body: fd,
-        credentials: "include" // important for session auth
+        credentials: "include",
       });
 
       const data = await res.json();
+
       if (!res.ok) {
-        alert(data.message || "Update failed");
-      } else {
-        // refresh UI (image path and fields)
-        populateProfile(data.role || currentRole, data.user || {});
-        avatarImg.src = (data.user && data.user.image) ? "/" + data.user.image : avatarImg.src;
-        alert("Profile updated successfully");
+        alert(data.message || "Nothing to update");
+        return;
       }
+
+      // Success case
+      populateProfile(data.user.role || currentRole, data.user);
+      alert("Profile updated successfully");
     } catch (err) {
       console.error(err);
       alert("Update failed");
@@ -139,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("/api/profile", {
         method: "PUT",
         body: fd,
-        credentials: "include"
+        credentials: "include",
       });
       if (!res.ok) {
         const err = await res.json();
@@ -161,7 +202,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Example: (we will assume you added these IDs)
   const localUpdateBtn = document.getElementById("updateProfileBtn");
   if (localUpdateBtn) localUpdateBtn.addEventListener("click", submitProfile);
-  if (changePwdBtn) changePwdBtn.addEventListener("click", () => { window.location.href = "change-password.html"; });
+  if (changePwdBtn)
+    changePwdBtn.addEventListener("click", () => {
+      window.location.href = "change-password.html";
+    });
 
   // initial fetch
   fetchProfile();

@@ -1,29 +1,4 @@
 // =============================
-// Mobile Menu Toggle
-// =============================
-const menuToggle = document.getElementById("menu-toggle");
-const navLinks = document.querySelector(".nav-links");
-
-menuToggle.addEventListener("click", () => {
-  navLinks.classList.toggle("inactive");
-  menuToggle.classList.toggle("open");
-});
-
-// =============================
-// Smooth Scroll Animation
-// =============================
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute("href")).scrollIntoView({
-      behavior: "smooth",
-    });
-    navLinks.classList.remove("active"); // Close menu after click on mobile
-    menuToggle.classList.remove("open");
-  });
-});
-
-// =============================
 // Fade-In Animation on Scroll
 // =============================
 const faders = document.querySelectorAll(".step, .feature");
@@ -45,30 +20,20 @@ faders.forEach((fader) => {
   appearOnScroll.observe(fader);
 });
 
-// Mobile menu toggle (shared for all pages)
-const menuBtn = document.getElementById("menu-toggle");
-const navList = document.getElementById("nav-links");
-
-if (menuBtn && navList) {
-  menuBtn.addEventListener("click", () => {
-    const open = navList.classList.toggle("active");
-    menuBtn.setAttribute("aria-expanded", String(open));
-  });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("menu-toggle");
-  const nav = document.getElementById("nav-links");
-
-  toggle.addEventListener("click", () => {
-    nav.classList.toggle("show");
-  });
-
-  // Close menu when clicking a link (mobile)
-  nav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => nav.classList.remove("show"));
+// =============================
+// Smooth Scroll Animation
+// =============================
+document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+  anchor.addEventListener("click", function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute("href")).scrollIntoView({
+      behavior: "smooth",
+    });
+    navLinks.classList.remove("active"); // Close menu after click on mobile
+    menuToggle.classList.remove("open");
   });
 });
+
 
 // Accordion Functionality
 const accordionBtns = document.querySelectorAll(".accordion-btn");
@@ -94,10 +59,4 @@ accordionBtns.forEach((btn) => {
       content.style.padding = "15px";
     }
   });
-});
-
-// Profile page ka logic
-// Navbar Toggle
-document.getElementById("menu-toggle").addEventListener("click", () => {
-  document.querySelector(".nav-links").classList.toggle("active");
 });

@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Labour Dashboard - LabursHub</title>
-  <link rel="stylesheet" href="./assets/css/styles.css">
-  <script src="./assets/js/script.js" defer></script>
-</head>
-<body>
 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Labour Dashboard - LabursHub</title>
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <script src="./assets/js/script.js" defer></script>
+  <script src="./assets/js/auth.js"></script>
+  <script src="./assets/js/navbar.js"></script>
+  <script src="./assets/js/script.js"></script>
+
+</head>
+
+<body>
   <!-- Navbar -->
   <header>
     <nav class="navbar">
-      <div class="logo">LabursHub</div>
+      <div class="logo">Laburs<span>Hub</span></div>
+
       <div class="menu-toggle" id="menu-toggle">☰</div>
-      <ul class="nav-links">
+
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="labour-dashboard.html" class="active">Dashboard</a></li>
-        <li><a href="profile.html">Profile</a></li>
-        <li><a href="applied-jobs.html">Applied Jobs</a></li>
-        <li><a href="Q&A.html">Help</a></li>
-        <li><a href="index.html">Logout</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="Q&A.HTML">FAQ</a></li>
+        <li><a href="login.html" id="nav-login">Login</a></li>
+        <li><a href="register.html" id="nav-register">Register</a></li>
+
+        <li><a href="profile.html" id="nav-profile" style="display:none">Profile</a></li>
+        <li><a href="/logout" id="nav-logout" style="display:none">Logout</a></li>
       </ul>
     </nav>
+
   </header>
 
   <!-- Dashboard Section -->
@@ -31,44 +41,53 @@
       <h2>Welcome, <span class="highlight">AABBCC (Example Labour)</span></h2>
       <p>Here are the jobs available for you:</p>
 
-      <div class="table-container">
-        <table class="job-table">
-          <thead>
-            <tr>
-              <th>Job Title</th>
-              <th>Location</th>
-              <th>Pay</th>
-              <th>Posted By</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>House Painting</td>
-              <td>Ahmedabad</td>
-              <td>₹800/day</td>
-              <td>Mr. Sharma</td>
-              <td><button class="apply-btn">Apply</button></td>
-            </tr>
-            <tr>
-              <td>Tile Fitting</td>
-              <td>Surat</td>
-              <td>₹1000/day</td>
-              <td>Mr. Patel</td>
-              <td><button class="apply-btn">Apply</button></td>
-            </tr>
-            <tr>
-              <td>Carpentry Work</td>
-              <td>Vadodara</td>
-              <td>₹1200/day</td>
-              <td>Mr. Khan</td>
-              <td><button class="apply-btn">Apply</button></td>
-            </tr>
-          </tbody>
-        </table>
+      <h3>Job Requests</h3>
+      <div id="jobs"></div>
+
+      <script>
+        async function loadJobs() {
+          const res = await fetch("/api/jobs", { credentials: "include" });
+          const jobs = await res.json();
+
+          const box = document.getElementById("jobs");
+          box.innerHTML = "";
+
+          jobs.forEach((job) => {
+            box.innerHTML += `
+      <div style="border:1px solid #ccc; padding:10px; margin:10px 0">
+        <strong>Customer:</strong> ${job.customerId.name}<br>
+        <strong>City:</strong> ${job.customerId.city}<br>
+        <strong>Status:</strong> ${job.status}<br>
+
+        ${job.status === "pending"
+                ? `
+              <button onclick="updateJob('${job._id}','accepted')">Accept</button>
+              <button onclick="updateJob('${job._id}','rejected')">Reject</button>
+            `
+                : ""
+              }
       </div>
+    `;
+          });
+        }
+
+        async function updateJob(id, status) {
+          await fetch(`/api/jobs/${id}`, {
+            method: "PUT",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status }),
+          });
+          loadJobs();
+        }
+
+        loadJobs();
+      </script>
+      </table>
+    </div>
     </div>
   </section>
-
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </body>
+
 </html>
